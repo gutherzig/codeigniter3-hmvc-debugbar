@@ -1,188 +1,165 @@
-CodeIgniter 3.1.10 + HMVC + debugbar
+<h3>CodeIgniter 3.1.10 + HMVC + debugbar</h3>
+
+---
+<h4>Credits:</h4>
+
+_**CodeIgniter**_
+https://codeigniter.com/
+
+_**HMVC Modular Extension: WireDesignZ**_
+https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc
+
+_**CodeIgniter Debugbar: Tan5en5**_
+https://github.com/Tan5en5/codeigniter-debugbar
+
+---
+
+<h3>First thing first:</h3>
+
+untuk menginstal / update ```vendor```, eksekusi:
+```sh
+composer update
+```
 
 
-**Modif ROOTDIR --> public**
+<h3>Sedikit modifikasi: apache htdocs / nginx root dir</h3>
 ----------------------
-1. di rootdir, buat direktori "public"
-2. arahkan rootdir nginx / apache anda ke direktori "public"
-3. pindahkan "index.php" (dan "user_guide" kalau diperlukan) ke "public"
-4. edit "public/index.php", update:
+1. Arahkan htdocs webserver anda ke direktori ```public```
+2. Pindahkan ```index.php```, ```user_guide``` (_kalau masih dibutuhkan_) ke dalam direktori ```public```
+3. Edit ```public/index.php```, update 2 baris ini:
 		$system_path = '../system';
 		$application_path = '../application';
 
+_**Note:**_
+Karena htdocs / root dir webserver diarahkan ke direktori <code>public</code>, maka semua aset html seperti CSS, JS, Images dan lain-lain harus disimpan didalam direktori <code>public</code> tersebut.
 
-**Helper GLOBAL**
+
+<h3>Helper: _global_</h3>
 --------------
-Untuk mempermudah debugging, buat helper namanya "global_helper.php", simpan di folder "helpers", dan jadikan autoload.
-Isi file-nya kurang lebih seperti ini:
-```
-<?phpCodeIgniter 3.1.10 + HMVC + debugbar
+Untuk mempermudah _debugging_, telah dibuat helper namanya "global_helper.php". Disimpan di folder ```helpers```, dan jadikan autoload.
+
+Fungsi dari helper global ini, antara lain:
+
+1. <code>debugz($var)</code>
+	ini akan melakukan ```print_r($var)``` kemudian ```die()```  didalam tag html ```<pre>...</pre>```
+
+2. <code>debugz($var, FALSE)</code>
+	sama dengan <code>debugz($var)</code>, tapi tanpa ```<pre>...</pre>```
+
+3. <code>dumpz($var)</code>
+	ini akan melakukan ```print_r($var)``` kemudian ```die()```  didalam tag html ```<pre>...</pre>```
+
+4. <code>dumpz($var, FALSE)</code>
+	sama dengan <code>dumpz($var)</code>, tapi tanpa ```<pre>...</pre>```
+
+5. <code>debugbar()</code>
+	untuk mengaktifkan debugbar, tinggal masukan baris <code>debugbar()></code>, baik di controller maupun di views.
+
 ---
 
-<h3>Modify ROOT DIRECTORY</h3>
+<h2>Merakit dari NOL</h2>
 
-Let's make a little modification here :-)
+Tentunya, **download CodeIgniter** terbaru (saya menggunakan versi 3.1.10). Mari membuat sedikit modifikasi :-)
 
-1. create directory <code>public</code> at rootdir (if not exist yet!), so it should look like this:
-   ```
-   project_dir/
-     +---  application/
-     +---  public/
-     +---  system/
-     +---  user_guide/
-     +---  vendor/
-     composer.json
-     index.php
-     ```
-1. point your webserver (nginx / apache) rootdir to that "public" directory
-1. move <code>index.php</code> (and <code>user_guide</code> _if only_ you still need it) to <code>public</code> _newly_ created.
+1. Jika belum ada, buat direktori <code>public</code> sejajar dengan direktori <code>application</code> dan <code>system</code>.
+2. Kemudian pindahkan <code>index.php</code> beserta <code>user_guide</code> kedalam <code>public</code> tersebut.
+Struktur baru seharusnya menjadi seperti berikut:
 	```
-   project_dir/
-     +---  application/
-     +---  public/
-            +---  user_guide/
-            index.php
-     +---  system/
-     +---  vendor/
-     composer.json
-     ```
-1. edit <code>index.php</code>, update <code>$system_path</code> and <code>$application_path</code> into these:
+	project_dir/
+	+---  application/
+	+---  public/
+			+---  user_guide/
+			index.php
+	+---  system/
+	+---  vendor/
+	composer.json
+	```
+3. Edit <code>index.php</code>, update <code>$system_path</code> and <code>$application_path</code> menjadi seperti ini:
 ```php
 $system_path = '../system';
 $application_path = '../application';
 ```
-**Note:**
-Since the webserver rootdir pointed to <code>public</code> directory, you should put all html assets in it, such as CSS, JS, Images, etc.
+Ok, _1st_ step: Done!
+Jangan lupa arahkan htdocs / root dir web server anda ke direktori <code>public</code>
 
-------
 
-<h3>A Little "Helper"</h3>
+Berikutnya, **instalasi _codeigniter-debugbar_** via _composer_. Buka <code>composer.json</code> dan edit seperti berikut: 
 
-To make debugging _easier_:
-1. Create a new helper file called: _<code>global_helper.php</code>_ under _<code>application/helpers</code>_, look like this (modify as you like):
+1. Edit baris: "require-dev.mikey179/vfsStream" menjadi: "require-dev.mikey179/vfsstream" (huruf kecil semua)
+2. Hapus baris "phpunit/phpunit-mock-objects" karena sudah _deprecated_
+3. Pada bagian _"require"_, tambahkan _"tan5en5/codeigniter-debugbar": "dev-master"_, lengkapnya seperti ini:
 ```php
-<?php
-(defined('BASEPATH')) OR exit('No direct script access allowed');
-
-function debugz($data = NULL, $pre = TRUE) 
 {
-	if($pre) { echo '<pre>'; }
-	print_r($data);
-	if($pre) { echo '</pre>'; }	
-	die();
-}
-
-function dumpz($data = NULL, $pre = TRUE) 
-{
-	if($pre) { echo '<pre>'; }
-	var_dump($data);
-	if($pre) { echo '</pre>'; }	
-	die();
-}
-```
-2. Make it _autoload_ in the _config/autoload.php_ by doing this:
-```php
-$autoload['helper'] = array('global');
-```
-
-
-
-**Helper Usage:**
-
-<code>**debugz(_$var_)**</code>
-will do a simple <code>print_r($var)</code> inside ```<pre>...</pre>``` tag and then <code>**die()**</code>, so it will stop the next process.
-
-<code>**debugz(_$var, FALSE_)**</code>
-will do the same, without ```<pre>...</pre>```
-
-<code>**dumpz(_$var_)**</code>
-will do <code>var_dump($var)</code> inside ```<pre>...</pre>``` tag and then <code>**die()**</code>, so it will stop the next process.
-
-<code>**dumpz(_$var, FALSE_)**</code>
-will do the same, without  ```<pre>...</pre>```
-
-
-
-
-
-
-**Fitur DEBUGBAR**
----------------
-https://github.com/Tan5en5/codeigniter-debugbar
-
-
-1. edit /composer.json:
-   - edit baris: "require-dev.mikey179/vfsStream" menjadi: "require-dev.mikey179/vfsstream" (huruf kecil semua)
-   - hapus baris "phpunit/phpunit-mock-objects" karena sudah deprecated / tidak ada
-   - pada bagian "require", tambahkan "tan5en5/codeigniter-debugbar": "dev-master", lengkapnya seperti ini:
-   =====================================================
-	{
-		"require": {
-			"tan5en5/codeigniter-debugbar": "dev-master"
-		}
+	"require": {
+		"tan5en5/codeigniter-debugbar": "dev-master"
 	}
-	=====================================================
-	- save, exit
-	- jalankan "composer update", pastikan tidak ada error.
+}
+```
+4. Save + exit, kemudian jalankan <code>composer update</code>. Pastikan tidak ada error.
+5. Enable-kan _composer_autoload_ di file _"application/config/config.php"_, tambahkan baris ini :
+```php
+$config['composer_autoload'] = realpath(APPPATH.'../vendor/autoload.php');
+```
+6. Enable-kan package _codeigniter-debugbar_ di file _"application/config/autoload.php"_, tambahkan baris ini :
+```php
+$autoload['packages'] = array(APPPATH.'third_party/codeigniter-debugbar');
+```
+7. Sejauh ini debugbar seharusnya sudah dapat dipakai.
 
-2. Enable-kan composer autoload (di file "application/config/config.php"), pastikan tambahkan baris ini :
-	"$config['composer_autoload'] = realpath(APPPATH.'../vendor/autoload.php');"
+Agar mempermudah pemanggilan _debugbar_ ini, Saya pribadi membuat fungsi dalam sebuah helper (namanya _global_helper.php_)yang di-autoload. Isinya kurang lebih seperti ini:
+```php
+function debugbar()
+{
+   $ci =& get_instance();
+   $ci->load->library('console');
+   // $this->console->exception(new Exception('test exception'));
+   $ci->console->debug('Debug message');
+   $ci->console->info('Info message');
+   $ci->console->warning('Warning message');
+   $ci->console->error('Error message');
+   $ci->output->enable_profiler(TRUE);
+   //return;
+}
+```
+Pemanggilannya bisa dilakukan baik di controller maupun di view-nya langsung, hanya dengan memasukan baris <code>debugbar();</code>
 
-3. Enable-kan package Debugbar (di file "application/config/autoload.php"), tambahkan baris ini :
-	"$autoload['packages'] = array(APPPATH.'third_party/codeigniter-debugbar');"
+Untuk setting lebih lengkapnya silakan baca-baca sendiri dokumentasinya di website pemiliknya.
 
-4. sejauh ini debugbar sudah berjalan
-
-
-
-
-**Enable HMVC**
-https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc/downloads/
+Berikutnya, _**instalasi Modul Ekstensi HMVC**_, dari _WireDesignZ_ 
 
 1. Download modul CI HMVC di: https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc/get/f77a3fc9a6fd.zip dan ekstrak!
 2. Dari hasil ekstrak:
-   * kopi isi 'core/' ke dalam 'applications/core/'
-   * kopi folder 'third-party/MX' ke 'application/third-party/'
-3. Di dalam folder 'application', buat folder baru namanya 'modules' (contoh: 'application/modules'). Didalam folder modules itulah kita akan membuat modul-modul HMVC
-4. Buka 'application/config/config.php', tambahkan:
-	```
-	/* Modul HMVC */
-$config['modules_locations'] = array(
-    APPPATH . 'modules/' => '../modules/',
-    // modul lain 1,
-    // modul lain 2.. 3.. dst kalau ada mah!
-);
-	```
-5. klo ada error, lihat di bagian bawah!
-
-
-
-
-https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc-ci-php-7.3.html
-
-
-
-
-
-
-**<h2>ERROR ROUTER</h2>**
-
-A PHP Error was encountered
-Severity: 8192
-
-Message: strpos(): Non-string needles will be interpreted as strings in the future. Use an explicit chr() call to preserve the current behavior
-
-Filename: MX/Router.php
-
-Line Number: 239
------------------------
-
-INI PERBAIKANNYA 
-
-Buka application/third-party/MX/Router.php
-GANTI FUNGSI ```function set_class($class)``` menjadi seperti ini (full):
-------------------------------------------------------------------------------------------
+   * kopi semua isi ```core/``` ke dalam ```applications/core/``` (biasanya cuma ada 2 file: _MY_Router.php_ dan _MY_Loader.php_)
+   * kopi folder ```third-party/MX``` ke ```application/third-party/MX```
+3. Buat direktori baru namanya '_application/modules_'. Didalam itulah kita akan membuat modul-modul HMVC.
+4. Buka '_application/config/config.php_', tambahkan:
+```php
+/* Modul HMVC */
+$config['modules_locations'] = array(APPPATH . 'modules/' => '../modules/');
 ```
+5. klo ada error, scroll di bagian penjelasan error-error di bagian bawah!
+
+Sampai tahap ini, HMVC dan debugbar seharusnya sudah dapat berjalan. 
+
+---
+<h2>ERROR(s)</h2>
+
+**Error ROUTER**
+
+> A PHP Error was encountered
+Severity: 8192
+>
+>Message: strpos(): Non-string needles will be interpreted as strings in the future. Use an explicit chr() call to preserve the current behavior
+>
+>Filename: MX/Router.php
+>
+>Line Number: 239
+
+Ini perbaikannya:
+
+1. Buka _application/third-party/MX/Router.php_
+2. Cari baris: <code>function set_class($class)</code> dan ubah menjadi seperti ini (full):
+```php
 	public function set_class($class)
 	{
 		$suffix = $this->config->item('controller_suffix');
@@ -193,33 +170,28 @@ GANTI FUNGSI ```function set_class($class)``` menjadi seperti ini (full):
 		parent::set_class($class);
 	}
 ```
-------------------------------------------------------------------------------------------
+Sumber:
+https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc-ci-php-7.3.html
 
 
+**Error LOADER**
 
-**<h2>ERROR LOADER</h2>**
-```
-An uncaught Exception was encountered
-Type: Error
+>An uncaught Exception was encountered
+>Type: Error
+>
+>Message: Call to undefined method MY_Loader::_ci_object_to_array()
+>
+>Filename: >/Volumes/data/DOMAINS/htdocs/CodeIgniter/ci3110_blank/application/third_party/MX/Loader.php
+>
+>Line Number: 300
 
-Message: Call to undefined method MY_Loader::_ci_object_to_array()
+Ini perbaikannya:
 
-Filename: /Volumes/data/DOMAINS/htdocs/CodeIgniter/ci3110_blank/application/third_party/MX/Loader.php
-
-Line Number: 300
-```
------------------------
-
-INI PERBAIKANNYA 
-
-Buka application/third-party/MX/Loader.php
-CARI apakah ada fungsi ```_ci_object_to_array()```
-PASTIKAN ADA, DAN ISINYA HARUS SEPERTI INI:
-------------------------------------------------------------------------------------------
-```
+1. Buka _application/third-party/MX/Loader.php_
+2. Cari fungsi <code>_ci_object_to_array()</code>. Jika tidak ada, buat dan isinya pastikan seperti ini:
+```php
 protected function _ci_object_to_array($object) {
 		return is_object($object) ? get_object_vars($object) : $object;
 	}
 ```
-------------------------------------------------------------------------------------------
-
+---
