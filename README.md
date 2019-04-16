@@ -67,21 +67,21 @@ Tentunya, **download CodeIgniter** terbaru (saya menggunakan versi 3.1.10). Mari
 1. Jika belum ada, buat direktori <code>public</code> sejajar dengan direktori <code>application</code> dan <code>system</code>.
 2. Kemudian pindahkan <code>index.php</code> beserta <code>user_guide</code> kedalam <code>public</code> tersebut.
 Struktur baru seharusnya menjadi seperti berikut:
-	```
+	```php
 	project_dir/
 	+---  application/
 	+---  public/
-			+---  user_guide/
-			index.php
+		  +---  user_guide/
+		  index.php
 	+---  system/
 	+---  vendor/
 	composer.json
 	```
 3. Edit <code>index.php</code>, update <code>$system_path</code> and <code>$application_path</code> menjadi seperti ini:
-```php
-$system_path = '../system';
-$application_path = '../application';
-```
+	```php
+    $system_path = '../system';
+    $application_path = '../application';
+    ```
 Ok, _1st_ step: Done!
 Jangan lupa arahkan htdocs / root dir web server anda ke direktori <code>public</code>
 
@@ -91,22 +91,23 @@ Berikutnya, **instalasi _codeigniter-debugbar_** via _composer_. Buka <code>comp
 1. Edit baris: "require-dev.mikey179/vfsStream" menjadi: "require-dev.mikey179/vfsstream" (huruf kecil semua)
 2. Hapus baris "phpunit/phpunit-mock-objects" karena sudah _deprecated_
 3. Pada bagian _"require"_, tambahkan _"tan5en5/codeigniter-debugbar": "dev-master"_, lengkapnya seperti ini:
-```php
-{
-	"require": {
-		"tan5en5/codeigniter-debugbar": "dev-master"
-	}
-}
-```
+	```php
+    {
+      "require": {
+          "tan5en5/codeigniter-debugbar": "dev-master"
+      }
+    }
+    ```
+
 4. Save + exit, kemudian jalankan <code>composer update</code>. Pastikan tidak ada error.
 5. Enable-kan _composer_autoload_ di file _"application/config/config.php"_, tambahkan baris ini :
-```php
-$config['composer_autoload'] = realpath(APPPATH.'../vendor/autoload.php');
-```
+   ```php
+   $config['composer_autoload'] = realpath(APPPATH.'../vendor/autoload.php');
+   ```
 6. Enable-kan package _codeigniter-debugbar_ di file _"application/config/autoload.php"_, tambahkan baris ini :
-```php
-$autoload['packages'] = array(APPPATH.'third_party/codeigniter-debugbar');
-```
+   ```php
+   $autoload['packages'] = array(APPPATH.'third_party/codeigniter-debugbar');
+   ```
 7. Sejauh ini debugbar seharusnya sudah dapat dipakai.
 
 Agar mempermudah pemanggilan _debugbar_ ini, Saya pribadi membuat fungsi dalam sebuah helper (namanya _global_helper.php_)yang di-autoload. Isinya kurang lebih seperti ini:
@@ -136,10 +137,10 @@ Berikutnya, _**instalasi Modul Ekstensi HMVC**_, dari _WireDesignZ_
    * kopi folder ```third-party/MX``` ke ```application/third-party/MX```
 3. Buat direktori baru namanya '_application/modules_'. Didalam itulah kita akan membuat modul-modul HMVC.
 4. Buka '_application/config/config.php_', tambahkan:
-```php
-/* Modul HMVC */
-$config['modules_locations'] = array(APPPATH . 'modules/' => '../modules/');
-```
+   ```php
+   /* Modul HMVC */
+   $config['modules_locations'] = array(APPPATH . 'modules/' => '../modules/');
+   ```
 5. klo ada error, scroll di bagian penjelasan error-error di bagian bawah!
 
 Sampai tahap ini, HMVC dan debugbar seharusnya sudah dapat berjalan. 
