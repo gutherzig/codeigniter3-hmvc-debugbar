@@ -3,14 +3,17 @@
 ---
 <h4>Credits:</h4>
 
-_**CodeIgniter**_
-https://codeigniter.com/
+**CodeIgniter**
 
-_**HMVC Modular Extension: WireDesignZ**_
-https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc
+>https://codeigniter.com/
 
-_**CodeIgniter Debugbar: Tan5en5**_
-https://github.com/Tan5en5/codeigniter-debugbar
+**HMVC Modular Extension: WireDesignZ**
+
+>https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc
+
+**CodeIgniter Debugbar: Tan5en5**
+
+>https://github.com/Tan5en5/codeigniter-debugbar
 
 ---
 
@@ -23,7 +26,7 @@ composer update
 
 
 <h3>Sedikit modifikasi: apache htdocs / nginx root dir</h3>
-----------------------
+
 1. Arahkan htdocs webserver anda ke direktori ```public```
 2. Pindahkan ```index.php```, ```user_guide``` (_kalau masih dibutuhkan_) ke dalam direktori ```public```
 3. Edit ```public/index.php```, update 2 baris ini:
@@ -146,8 +149,9 @@ Sampai tahap ini, HMVC dan debugbar seharusnya sudah dapat berjalan.
 
 **Error ROUTER**
 
-> A PHP Error was encountered
-Severity: 8192
+>A PHP Error was encountered
+>
+>Severity: 8192
 >
 >Message: strpos(): Non-string needles will be interpreted as strings in the future. Use an explicit chr() call to preserve the current behavior
 >
@@ -170,9 +174,9 @@ Ini perbaikannya:
 		parent::set_class($class);
 	}
 ```
-Sumber:
-https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc-ci-php-7.3.html
+_**Sumber**: https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc-ci-php-7.3.html_
 
+.
 
 **Error LOADER**
 
@@ -181,7 +185,7 @@ https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc-ci-php-7.3.h
 >
 >Message: Call to undefined method MY_Loader::_ci_object_to_array()
 >
->Filename: >/Volumes/data/DOMAINS/htdocs/CodeIgniter/ci3110_blank/application/third_party/MX/Loader.php
+>Filename: /Volumes/data/DOMAINS/htdocs/CodeIgniter/ci3110_blank/application/third_party/MX/Loader.php
 >
 >Line Number: 300
 
@@ -191,7 +195,7 @@ Ini perbaikannya:
 2. Cari fungsi <code>_ci_object_to_array()</code>. Jika tidak ada, buat dan isinya pastikan seperti ini:
 ```php
 protected function _ci_object_to_array($object) {
-		return is_object($object) ? get_object_vars($object) : $object;
-	}
+	return is_object($object) ? get_object_vars($object) : $object;
+}
 ```
 ---
