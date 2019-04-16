@@ -45,13 +45,13 @@ Untuk mempermudah _debugging_, telah dibuat helper namanya "global_helper.php". 
 Fungsi dari helper global ini, antara lain:
 
 1. <code>debugz($var)</code>
-	ini akan melakukan ```print_r($var)``` kemudian ```die()```  didalam tag html ```<pre>...</pre>```
+	ini akan melakukan ```print_r($var)``` + ```die()```  didalam tag html ```<pre>...</pre>```
 
 2. <code>debugz($var, FALSE)</code>
 	sama dengan <code>debugz($var)</code>, tapi tanpa ```<pre>...</pre>```
 
 3. <code>dumpz($var)</code>
-	ini akan melakukan ```print_r($var)``` kemudian ```die()```  didalam tag html ```<pre>...</pre>```
+	ini akan melakukan ```var_dump($var)``` + ```die()```  didalam tag html ```<pre>...</pre>```
 
 4. <code>dumpz($var, FALSE)</code>
 	sama dengan <code>dumpz($var)</code>, tapi tanpa ```<pre>...</pre>```
