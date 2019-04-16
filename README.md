@@ -1,6 +1,7 @@
 <h3>CodeIgniter 3.1.10 + HMVC + debugbar</h3>
 
 ---
+
 <h4>Credits:</h4>
 
 **CodeIgniter**
@@ -24,7 +25,6 @@ untuk menginstal / update ```vendor```, eksekusi:
 composer update
 ```
 
-
 <h3>Sedikit modifikasi: apache htdocs / nginx root dir</h3>
 
 1. Arahkan htdocs webserver anda ke direktori ```public```
@@ -36,9 +36,10 @@ composer update
 _**Note:**_
 Karena htdocs / root dir webserver diarahkan ke direktori <code>public</code>, maka semua aset html seperti CSS, JS, Images dan lain-lain harus disimpan didalam direktori <code>public</code> tersebut.
 
+.
 
 <h3>Helper: _global_</h3>
---------------
+
 Untuk mempermudah _debugging_, telah dibuat helper namanya "global_helper.php". Disimpan di folder ```helpers```, dan jadikan autoload.
 
 Fungsi dari helper global ini, antara lain:
