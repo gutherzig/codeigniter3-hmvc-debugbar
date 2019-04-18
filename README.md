@@ -20,8 +20,8 @@
 
 <h3>First thing first:</h3>
 
-untuk menginstal / update ```vendor```, eksekusi:
-```sh
+Untuk amannya, hapus dulu direktori _vendor_ dan eksekusi:
+```bash
 composer update
 ```
 
@@ -30,15 +30,16 @@ composer update
 1. Arahkan htdocs webserver anda ke direktori ```public```
 2. Pindahkan ```index.php```, ```user_guide``` (_kalau masih dibutuhkan_) ke dalam direktori ```public```
 3. Edit ```public/index.php```, update 2 baris ini:
-		$system_path = '../system';
-		$application_path = '../application';
-
+	```php
+	$system_path = '../system';
+	$application_path = '../application';
+	```
 _**Note:**_
 Karena htdocs / root dir webserver diarahkan ke direktori <code>public</code>, maka semua aset html seperti CSS, JS, Images dan lain-lain harus disimpan didalam direktori <code>public</code> tersebut.
 
 .
 
-<h3>Helper: _global_</h3>
+<h3>Helper: global</h3>
 
 Untuk mempermudah _debugging_, telah dibuat helper namanya "global_helper.php". Disimpan di folder ```helpers```, dan jadikan autoload.
 
