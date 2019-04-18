@@ -148,9 +148,11 @@ Berikutnya, _**instalasi Modul Ekstensi HMVC**_, dari _WireDesignZ_
 Sampai tahap ini, HMVC dan debugbar seharusnya sudah dapat berjalan. 
 
 ---
-<h2>ERROR(s)</h2>
+<h3>ERROR_ERROR yang dialami selama Instalasi</h3>
 
-**Error ROUTER**
+.
+
+_**Error ROUTER**_
 
 >A PHP Error was encountered
 >
@@ -167,21 +169,20 @@ Ini perbaikannya:
 1. Buka _application/third-party/MX/Router.php_
 2. Cari baris: <code>function set_class($class)</code> dan ubah menjadi seperti ini (full):
 ```php
-	public function set_class($class)
-	{
-		$suffix = $this->config->item('controller_suffix');
-		if ($suffix && strpos($class, $suffix) === FALSE)
-		{
-			$class .= $suffix;
-		}
-		parent::set_class($class);
-	}
+public function set_class($class)
+{
+    $suffix = $this->config->item('controller_suffix');
+    if ($suffix && strpos($class, $suffix) === FALSE)
+    {
+        $class .= $suffix;
+    }
+    parent::set_class($class);
+}
 ```
-_**Sumber**: https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc-ci-php-7.3.html_
 
 .
 
-**Error LOADER**
+_**Error LOADER**_
 
 >An uncaught Exception was encountered
 >Type: Error
@@ -195,10 +196,16 @@ _**Sumber**: https://www.aviantorichad.com/2019/01/solved-error-strpos-pada-hmvc
 Ini perbaikannya:
 
 1. Buka _application/third-party/MX/Loader.php_
-2. Cari fungsi <code>_ci_object_to_array()</code>. Jika tidak ada, buat dan isinya pastikan seperti ini:
+2. Cari fungsi <code>_ci_object_to_array()</code>. Jika tidak ada, buat saja dan isinya pastikan seperti ini:
 ```php
 protected function _ci_object_to_array($object) {
-	return is_object($object) ? get_object_vars($object) : $object;
+    return is_object($object) ? get_object_vars($object) : $object;
 }
 ```
 ---
+
+Bagi yang berminat silakan modif / pakai dengan resiko sendiri _yes_.
+
+Framework CodeIgniter "_++_" ini saya buat untuk saya pribadi. Saya tidak bertanggungjawab atas kerusakan / kerugian material / non-material yang terjadi karena penggunaan framework modifikasi ini dalam mode produksi. Disini saya hanya sebatas berbagi saja.
+
+Untuk sharing, saya selalu terbuka :-)
