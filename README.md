@@ -2,7 +2,7 @@
 
 ---
 
-<h4>Credits:</h4>
+<h4>"Ingredients"</h4>
 
 **CodeIgniter**
 
